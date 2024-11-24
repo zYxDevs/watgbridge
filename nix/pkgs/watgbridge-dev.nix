@@ -28,7 +28,7 @@ let
 in
 buildGoApplication rec {
   pname = "watgbridge";
-  version = "1.10.1";
+  version = "1.11.0";
 
   pwd = localSrc;
   src = localSrc;

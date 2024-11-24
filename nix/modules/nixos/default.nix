@@ -28,6 +28,6 @@ in
       }
     ];
 
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [ cfg.commonSettings.package or package ];
   };
 }

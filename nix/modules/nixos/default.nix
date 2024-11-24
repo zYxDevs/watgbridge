@@ -70,6 +70,8 @@ in
           serviceConfig =
             {
               Restart = "on-failure";
+              RuntimeDirectory = instanceName;
+              StateDirectory = instanceName;
             }
             // (lib.optionalAttrs (settings.workingDirectory != null) {
               WorkingDirectory = settings.workingDirectory;
@@ -86,5 +88,17 @@ in
         };
       }
     );
+
+    users.users = mkIf (cfg.commonSettings.user == "watgbridge") {
+      watgbridge =
+        {
+          isSystemUser = true;
+        }
+        // lib.optionalAttrs (cfg.commonSettings.group != null) {
+          group = cfg.commonSettings.group;
+        };
+    };
+
+    users.group = mkIf (cfg.commonSettings.group == "watgbridge") { watgbridge = { }; };
   };
 }

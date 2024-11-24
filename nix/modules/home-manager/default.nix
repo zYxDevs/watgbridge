@@ -61,6 +61,8 @@ self:
               {
                 ExecStart = command;
                 Restart = "on-failure";
+                RuntimeDirectory = instanceName;
+                StateDirectory = instanceName;
               }
               // (lib.optionalAttrs (maxRuntime != null) {
                 RuntimeMaxSec = maxRuntime;

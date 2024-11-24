@@ -28,7 +28,7 @@
         };
       in
       with pkgs;
-      {
+      rec {
 
         devShells.default = mkShell {
           name = "watgbridge-dev";
@@ -41,6 +41,11 @@
             sqlite
           ];
           hardeningDisable = [ "fortify" ];
+        };
+
+        apps.default = {
+          type = "app";
+          program = "${packages.default}/bin/watgbridge";
         };
 
         packages = rec {

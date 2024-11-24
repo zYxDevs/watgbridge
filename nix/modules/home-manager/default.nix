@@ -22,7 +22,7 @@ self:
     };
 
     config = mkIf cfg.enable {
-      home.packages = [ cfg.package ];
+      home.packages = [ cfg.commonSettings.package or package ];
 
       systemd.user.services = mapAttrs' (
         key: settings:

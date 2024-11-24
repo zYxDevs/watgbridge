@@ -43,7 +43,7 @@ self:
             if settings.maxRuntime != null then settings.maxRuntime else cfg.commonSettings.maxRuntime
           );
 
-          requires = (if settings.requires != null then settings.requires else cfg.commonSettings.requires);
+          after = (if settings.after != null then settings.after else cfg.commonSettings.after);
 
         in
         {
@@ -51,15 +51,11 @@ self:
           name = instanceName;
 
           value = mkIf settings.enable {
-            Unit =
-              {
-                Description = "WaTgBridge service for '${instanceName}'";
-                Documentation = "https://github.com/akshettrj/watbridge";
-                After = [ "network.target" ];
-              }
-              // lib.optionalAttrs (requires != null) {
-                Requires = requires;
-              };
+            Unit = {
+              Description = "WaTgBridge service for '${instanceName}'";
+              Documentation = "https://github.com/akshettrj/watbridge";
+              After = [ "network.target" ] ++ lib.optionals (after != null) after;
+            };
 
             Service =
               {

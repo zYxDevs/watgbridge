@@ -64,12 +64,12 @@ self:
                   + lib.optionalString (settings.configPath != null) ''"${settings.configPath}"'';
                 Restart = "on-failure";
               }
-              // lib.optionalAttrs maxRuntime != null {
+              // (lib.optionalAttrs (maxRuntime != null) {
                 RuntimeMaxSec = maxRuntime;
-              }
-              // lib.optionalAttrs (settings.workingDirectory != null) {
+              })
+              // (lib.optionalAttrs (settings.workingDirectory != null) {
                 WorkingDirectory = settings.workingDirectory;
-              };
+              });
 
             Install = {
               WantedBy = [ "default.target" ];

@@ -61,7 +61,7 @@ self:
               {
                 ExecStart =
                   ''${watgbridgePackage}/bin/watbridge''
-                  + lib.optionalString (settings.configPath != null) ''"${settings.configPath}"'';
+                  + (lib.optionalString (settings.configPath != null) ''"${settings.configPath}"'');
                 Restart = "on-failure";
               }
               // (lib.optionalAttrs (maxRuntime != null) {

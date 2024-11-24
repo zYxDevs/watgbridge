@@ -52,7 +52,7 @@ in
           };
 
           configPath = mkOption {
-            type = types.nullOr (types.either (types.str types.path));
+            type = types.nullOr (types.oneOf [types.str types.path]);
             default = null;
             description = ''
               The path to the config file that will be loaded by WaTgBridge.

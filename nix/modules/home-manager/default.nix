@@ -35,6 +35,10 @@ self:
             if settings.package != null then settings.package else cfg.commonSettings.package
           );
 
+          command =
+            "${watgbridgePackage}/bin/watbridge"
+            + (if settings.configPath != null then " ${settings.configPath}" else "");
+
           maxRuntime = (
             if settings.maxRuntime != null then settings.maxRuntime else cfg.commonSettings.maxRuntime
           );
@@ -59,9 +63,7 @@ self:
 
             Service =
               {
-                ExecStart =
-                  ''${watgbridgePackage}/bin/watbridge''
-                  + (lib.optionalString settings.configPath != null ('' "${settings.configPath}"''));
+                ExecStart = command;
                 Restart = "on-failure";
               }
               // (lib.optionalAttrs (maxRuntime != null) {

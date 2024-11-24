@@ -21,13 +21,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = false;
-        message = "The NixOS module is not complete yet. Use home-manager module for now if possible.";
-      }
-    ];
-
     environment.systemPackages = [ cfg.commonSettings.package or package ];
 
     systemd.services = mapAttrs' (
@@ -49,7 +42,7 @@ in
           if settings.maxRuntime != null then settings.maxRuntime else cfg.commonSettings.maxRuntime
         );
 
-        after = (if settings.requires != null then settings.requires else cfg.commonSettings.requires);
+        after = (if settings.after != null then settings.after else cfg.commonSettings.after);
 
         user = (if settings.user != null then settings.user else cfg.commonSettings.user);
 
@@ -61,7 +54,7 @@ in
 
         value = mkIf settings.enable {
           description = "WaTgBridge service for '${instanceName}'";
-          documentation = "https://github.com/akshettrj/watgbridge";
+          documentation = ["https://github.com/akshettrj/watgbridge"];
           after = [ "network.target" ] ++ lib.optionals (after != null) after;
           script = command;
 
@@ -87,7 +80,7 @@ in
             });
         };
       }
-    );
+    ) cfg.instances;
 
     users.users = mkIf (cfg.commonSettings.user == "watgbridge") {
       watgbridge =
@@ -99,6 +92,6 @@ in
         };
     };
 
-    users.group = mkIf (cfg.commonSettings.group == "watgbridge") { watgbridge = { }; };
+    users.groups = mkIf (cfg.commonSettings.group == "watgbridge") { watgbridge = { }; };
   };
 }

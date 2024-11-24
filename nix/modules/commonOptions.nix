@@ -82,7 +82,7 @@ in
           };
 
           requires = mkOption {
-            type = types.nullOf (types.listOf types.str);
+            type = types.nullOr (types.listOf types.str);
             default = null;
             description = ''
               The systemd services to wait for before starting watbridge. "network.target" is added to the module itself. This option is meant to be used for stuff like Telegram Bot API service.

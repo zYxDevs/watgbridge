@@ -81,17 +81,5 @@ in
         };
       }
     ) cfg.instances;
-
-    users.users = mkIf (cfg.commonSettings.user == "watgbridge") {
-      watgbridge =
-        {
-          isSystemUser = true;
-        }
-        // lib.optionalAttrs (cfg.commonSettings.group != null) {
-          group = cfg.commonSettings.group;
-        };
-    };
-
-    users.groups = mkIf (cfg.commonSettings.group == "watgbridge") { watgbridge = { }; };
   };
 }
